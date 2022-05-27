@@ -39,11 +39,33 @@ def show_stats():
     return resp_json, 200, resp_headers
 
 @app.route("/add_stats", methods=["POST"])
-def create():
+def create_hero():
     """
     HTTP POST: Function to add new superhero data
     """
     global super_df
+    try:
+        inserted_hero = []
+        rejected_hero = []
+        data = request.json
+        for hero in data:
+            if ("name" in hero) and ("superpower" in hero) and ("weakness" in hero):
+                index = hero["name"]
+                super_df.loc[hero["name"]] = hero
+                inserted_hero.append(hero)
+            else:
+                rejected_hero.append(hero)
+        resp_json = {
+            "records_inserted": len(inserted_hero),
+            "result": inserted_hero,
+            "rejects": rejected_hero,
+        }
+        resp_headers = {
+            "content-type": "application/json",
+        }
+        return resp_json, 200, resp_headers
+    except Exception as err:
+        return {"status": "error", "error_msg": str(err)}, 400, {"content-type": "application/json"}
 
 
 if __name__ == "__main__":
