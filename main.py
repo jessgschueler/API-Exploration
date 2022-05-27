@@ -38,5 +38,13 @@ def show_stats():
     }
     return resp_json, 200, resp_headers
 
+@app.route("/add_stats", methods=["POST"])
+def create():
+    """
+    HTTP POST: Function to add new superhero data
+    """
+    global super_df
+
+
 if __name__ == "__main__":
     app.run('0.0.0.0', 5050)
