@@ -38,6 +38,7 @@ def show_stats():
     }
     return resp_json, 200, resp_headers
 
+
 @app.route("/add_stats", methods=["POST"])
 def create_hero():
     """
